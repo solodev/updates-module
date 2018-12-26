@@ -290,3 +290,12 @@ Add the following repeater shortcode. This should be placed within a &lt;ul&gt; 
 {{post_content}}
 [/entry]
 ```
+
+## Step 4: Add the SCSS/CSS
+ - /_/scss/updates.scss
+
+```
+.small, small {
+    font-size: 88%;
+}
+```
