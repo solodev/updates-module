@@ -249,77 +249,46 @@ Create a calendar for Updates and upload the following form.
 ```
 
 ## Step 2: Add the Repeater
- - site-explorer-repeater.tpl
+ - updates-repeater.tpl
 
 Add the following repeater shortcode. This should be placed within a &lt;ul&gt; tag in the navigation, and be shown when hovered. 
 
 ```
-<li class="text-uppercase mb-0">
-  <div class="dropdown position-absolute w-md-550p w-xl-600p bg-primary right-0 p-2 px-md-5 pb-md-5 pt-md-4 site-explorer">
-    <div class="row">
-      <div class="col-md-6">
-        <ul class="pl-0 list-unstyled">
+[repeater id='7'  pages="22" order="start_time desc" display_type="news" where="post_status='Published'"]
 
-          [repeater id='6' limit="0,2" order="start_time desc" display_type="news" where="post_status='Published'"]
-          [is_set value={{quick_title}}]
-          	<li class="mb-0 text-black"><a class="px-2 px-lg-3 text-white d-block w-100 h-100" href="{{quick_ref}}">{{quick_title}}</a></li>
-          [/is_set]
-          [is_empty value={{quick_title}}]
-          	<li class="mb-0 text-black"><a class="px-2 px-lg-3 text-white d-block w-100 h-100" href="{{quick_ref}}">{{event_title}}</a></li>
-          [/is_empty]
-
-          [/repeater]
-
-        </ul>
-      </div>
-      <div class="col-md-6">
-        <ul class="pl-0 list-unstyled">
-          [repeater id='6' limit="3,2" order="start_time desc" display_type="news" where="post_status='Published'"]
-          [is_set value={{quick_title}}]
-          	<li class="mb-0 text-black"><a class="px-2 px-lg-3 text-white d-block w-100 h-100" href="{{quick_ref}}">{{quick_title}}</a></li>
-          [/is_set]
-          [is_empty value={{quick_title}}]
-          	<li class="mb-0 text-black"><a class="px-2 px-lg-3 text-white d-block w-100 h-100" href="{{quick_ref}}">{{event_title}}</a></li>
-          [/is_empty]
-          [/repeater]
-        </ul>
-      </div>
-      <div class="col-sm-12 text-center mt-4">
-        <a class="btn btn-white btn-lg d-none d-md-block" href="/search.stml">I want to find something else</a>
-      </div>
+  <div class="row pb-5">
+   <div class="col-12">
+    <div class="d-flex flex-column justify-content-center w-100">
+    <a href="{{path}}" class="text-black">
+      [is_set value="{{heading_title}}"]
+        <h2 class="h3 m0">{{heading_title}}</h2>
+      [/is_set]
+      [is_empty value="{{heading_title}}"]
+        <h2 class="h3 m-0">{{event_title}}</h2>
+      [/is_empty]
+      </a>
+      <p class="small text-uppercase mt-1 text-primary"><strong>[print_date format="F d, Y" timestamp="{{start_time}}"]</strong></p>
+      <p class="mb-2">{{post_intro}}</p>
     </div>
   </div>
-</li>
+  </div>
+
+[/repeater]
+
 
 ```
 
 
-## Step 4: Add the SCSS/CSS
- - /_/js/site-explorer.scss
- 
- ```
- 
-.site-explorer {
-    opacity: 1;
-    top: 100%;
-    line-height: 2.8;
-    z-index: 1000;
-    transition: 1000;
-}
-nav .navbar-nav li:hover .dropdown {
-    opacity: 1;
-    pointer-events: auto;
-    visibility: visible;
-}
-@media screen and (min-width: 768px) {
-    .w-md-550p {
-        width: 550px !important;
-    }
-}
-@media screen and (min-width: 1200px) {
-    .w-xl-600p {
-        width: 600px !important;
-    }
-}
+## Step 3: Add the Detail Template
+ - updates-detail.tpl
 
- ```
+```
+[entry]
+[is_set value={{post_intro}}]
+<h2 class="mb-0 h3">{{post_intro}}</h2>
+[/is_set]
+
+<img alt="{{event_title}} Image" class="img-fluid my-5" src="[get_asset_file_url id={{news_image}}]">
+{{post_content}}
+[/entry]
+```
